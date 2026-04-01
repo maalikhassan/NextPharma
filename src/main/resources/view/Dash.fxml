@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.icet.controller.DashController">
+    <children>
+        <VBox prefHeight="650.0" prefWidth="220.0" style="-fx-background-color: #2c3e50;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label alignment="CENTER" prefHeight="80.0" prefWidth="220.0" text="NextPharma" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="26.0" />
+                    </font>
+                </Label>
+                <Button mnemonicParsing="false" onAction="#btnHomeOnAction" prefHeight="55.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-border-color: #34495e; -fx-border-width: 0 0 1 0;" text="Dashboard Home" textFill="WHITE">
+                    <font><Font size="14.0" /></font>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#btnMedicinesOnAction" prefHeight="55.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-border-color: #34495e; -fx-border-width: 0 0 1 0;" text="Manage Medicines" textFill="WHITE">
+                    <font><Font size="14.0" /></font>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#btnSuppliersOnAction" prefHeight="55.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-border-color: #34495e; -fx-border-width: 0 0 1 0;" text="Manage Suppliers" textFill="WHITE">
+                    <font><Font size="14.0" /></font>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#btnPlaceOrderOnAction" prefHeight="55.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-border-color: #34495e; -fx-border-width: 0 0 1 0;" text="Point of Sale (POS)" textFill="WHITE">
+                    <font><Font size="14.0" /></font>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#btnReportsOnAction" prefHeight="55.0" prefWidth="220.0" style="-fx-background-color: transparent; -fx-border-color: #34495e; -fx-border-width: 0 0 1 0;" text="Reports &amp; Analytics" textFill="WHITE">
+                    <font><Font size="14.0" /></font>
+                </Button>
+            </children>
+        </VBox>
+
+        <AnchorPane fx:id="mainContent" layoutX="220.0" prefHeight="650.0" prefWidth="780.0" style="-fx-background-color: #ecf0f1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label layoutX="40.0" layoutY="30.0" text="Dashboard Overview" textFill="#2c3e50">
+                    <font>
+                        <Font name="System Bold" size="28.0" />
+                    </font>
+                </Label>
+
+                <Label layoutX="40.0" layoutY="90.0" text="Low Stock Alerts" textFill="#e74c3c">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <TableView fx:id="tblLowStock" layoutX="40.0" layoutY="125.0" prefHeight="200.0" prefWidth="700.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+                    <columns>
+                        <TableColumn fx:id="colLowStockCode" prefWidth="120.0" text="Item Code" />
+                        <TableColumn fx:id="colLowStockName" prefWidth="430.0" text="Medicine Name" />
+                        <TableColumn fx:id="colLowStockQty" prefWidth="148.0" text="Qty On Hand" />
+                    </columns>
+                </TableView>
+
+                <Label layoutX="40.0" layoutY="350.0" text="Expiring Soon (Within 30 Days)" textFill="#f39c12">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Label>
+                <TableView fx:id="tblExpiring" layoutX="40.0" layoutY="385.0" prefHeight="220.0" prefWidth="700.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
+                    <columns>
+                        <TableColumn fx:id="colExpCode" prefWidth="120.0" text="Item Code" />
+                        <TableColumn fx:id="colExpName" prefWidth="430.0" text="Medicine Name" />
+                        <TableColumn fx:id="colExpDate" prefWidth="148.0" text="Expiry Date" />
+                    </columns>
+                </TableView>
+            </children>
+        </AnchorPane>
+    </children>
+</AnchorPane>
