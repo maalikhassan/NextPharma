@@ -40,8 +40,19 @@ public class DashController {
 
     @FXML
     void btnMedicinesOnAction(ActionEvent event) {
-        System.out.println("Medicines Clicked");
-        // Logic to load MedicineForm.fxml into mainContent
+        try {
+            // Load the MedicineForm FXML
+            AnchorPane medicinePane = javafx.fxml.FXMLLoader.load(getClass().getResource("/view/MedicineForm.fxml"));
+
+            // Clear the current content in the main area
+            mainContent.getChildren().clear();
+
+            // Add the new form to the main area
+            mainContent.getChildren().add(medicinePane);
+
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
