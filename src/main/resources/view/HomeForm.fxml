@@ -3,18 +3,43 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="650.0" prefWidth="780.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.icet.controller.HomeController">
     <children>
-        <Label layoutX="40.0" layoutY="30.0" text="Dashboard Overview" textFill="#2c3e50">
+        <Label layoutX="40.0" layoutY="20.0" text="Dashboard Overview" textFill="#2c3e50">
             <font><Font name="System Bold" size="28.0" /></font>
         </Label>
 
-        <Label layoutX="40.0" layoutY="90.0" text="Low Stock Alerts (Qty &lt; 20)" textFill="#e74c3c">
+        <HBox alignment="CENTER" layoutX="40.0" layoutY="70.0" prefWidth="700.0" spacing="20.0">
+            <children>
+                <VBox alignment="CENTER" prefHeight="100.0" prefWidth="220.0" style="-fx-background-color: #3498db; -fx-background-radius: 10;">
+                    <children>
+                        <Label text="Total Medicines" textFill="WHITE"><font><Font name="System Bold" size="16.0" /></font></Label>
+                        <Label fx:id="lblTotalMedicines" text="0" textFill="WHITE"><font><Font name="System Bold" size="36.0" /></font></Label>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="100.0" prefWidth="220.0" style="-fx-background-color: #2ecc71; -fx-background-radius: 10;">
+                    <children>
+                        <Label text="Total Sales (Rs.)" textFill="WHITE"><font><Font name="System Bold" size="16.0" /></font></Label>
+                        <Label fx:id="lblTotalSales" text="0.00" textFill="WHITE"><font><Font name="System Bold" size="28.0" /></font></Label>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="100.0" prefWidth="220.0" style="-fx-background-color: #f39c12; -fx-background-radius: 10;">
+                    <children>
+                        <Label text="Active Suppliers" textFill="WHITE"><font><Font name="System Bold" size="16.0" /></font></Label>
+                        <Label fx:id="lblTotalSuppliers" text="0" textFill="WHITE"><font><Font name="System Bold" size="36.0" /></font></Label>
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+
+        <Label layoutX="40.0" layoutY="190.0" text="Low Stock Alerts (Qty &lt; 20)" textFill="#e74c3c">
             <font><Font name="System Bold" size="18.0" /></font>
         </Label>
-        <TableView fx:id="tblLowStock" layoutX="40.0" layoutY="125.0" prefHeight="200.0" prefWidth="700.0">
+        <TableView fx:id="tblLowStock" layoutX="40.0" layoutY="220.0" prefHeight="160.0" prefWidth="700.0">
             <columns>
                 <TableColumn fx:id="colLowCode" prefWidth="120.0" text="Item Code" />
                 <TableColumn fx:id="colLowName" prefWidth="430.0" text="Medicine Name" />
@@ -22,10 +47,10 @@
             </columns>
         </TableView>
 
-        <Label layoutX="40.0" layoutY="350.0" text="Expiring Soon (Within 30 Days)" textFill="#f39c12">
+        <Label layoutX="40.0" layoutY="400.0" text="Expiring Soon (Within 30 Days)" textFill="#f39c12">
             <font><Font name="System Bold" size="18.0" /></font>
         </Label>
-        <TableView fx:id="tblExpiring" layoutX="40.0" layoutY="385.0" prefHeight="220.0" prefWidth="700.0">
+        <TableView fx:id="tblExpiring" layoutX="40.0" layoutY="430.0" prefHeight="180.0" prefWidth="700.0">
             <columns>
                 <TableColumn fx:id="colExpCode" prefWidth="120.0" text="Item Code" />
                 <TableColumn fx:id="colExpName" prefWidth="430.0" text="Medicine Name" />
