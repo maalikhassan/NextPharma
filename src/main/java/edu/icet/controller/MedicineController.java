@@ -163,6 +163,12 @@ public class MedicineController implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
+        if (txtCode.getText().isEmpty() || txtName.getText().isEmpty() || txtBrand.getText().isEmpty() ||
+            txtSupplierId.getText().isEmpty() || dateExpiry.getValue() == null ||
+            txtQty.getText().isEmpty() || txtPrice.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "All fields are required!").show();
+            return;
+        }
         try {
             // 1. Gather data from UI
             MedicineDto dto = new MedicineDto(
@@ -196,6 +202,12 @@ public class MedicineController implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
+        if (txtCode.getText().isEmpty() || txtName.getText().isEmpty() || txtBrand.getText().isEmpty() ||
+            txtSupplierId.getText().isEmpty() || dateExpiry.getValue() == null ||
+            txtQty.getText().isEmpty() || txtPrice.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "All fields are required!").show();
+            return;
+        }
         try {
             MedicineDto dto = new MedicineDto(
                     txtCode.getText(), txtName.getText(), txtBrand.getText(),

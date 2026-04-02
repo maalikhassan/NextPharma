@@ -109,6 +109,10 @@ public class SupplierController implements Initializable {
 
     @FXML
     void btnSaveOnAction(ActionEvent event) {
+        if (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtContact.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "All fields are required!").show();
+            return;
+        }
         try {
             SupplierDto dto = new SupplierDto(
                     txtId.getText(),
@@ -132,6 +136,10 @@ public class SupplierController implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
+        if (txtId.getText().isEmpty() || txtName.getText().isEmpty() || txtContact.getText().isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "All fields are required!").show();
+            return;
+        }
         try {
             SupplierDto dto = new SupplierDto(
                     txtId.getText(),
