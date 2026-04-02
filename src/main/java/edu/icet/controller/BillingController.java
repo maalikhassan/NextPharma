@@ -16,6 +16,12 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.view.JasperViewer;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BillingController implements Initializable {
 
@@ -179,6 +185,28 @@ public class BillingController implements Initializable {
             boolean isPlaced = orderService.placeOrder(orderDto);
 
             if (isPlaced) {
+                // --- JASPER REPORT GENERATION START ---
+                try {
+                    // 1. Load the JRXML file you just created
+                    JasperDesign design = net.sf.jasperreports.engine.xml.JRXmlLoader.load(getClass().getResourceAsStream("/reports/Invoice.jrxml"));
+                    JasperReport jasperReport = JasperCompileManager.compileReport(design);
+
+                    // 2. Set the Parameters (Order ID and Total)
+                    Map<String, Object> parameters = new HashMap<>();
+                    parameters.put("orderId", orderId);
+                    parameters.put("netTotal", String.format("%.2f", netTotal));
+
+                    // 3. Pass the JavaFX Cart directly to the Report!
+                    JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(cartList);
+
+                    // 4. Fill and View the Report
+                    JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+                    JasperViewer.viewReport(jasperPrint, false); // 'false' prevents the app from closing when you close the report window
+
+                } catch (JRException e) {
+                    new Alert(Alert.AlertType.ERROR, "Failed to load receipt: " + e.getMessage()).show();
+                }
+                // --- JASPER REPORT GENERATION END ---
                 new Alert(Alert.AlertType.INFORMATION, "Order Placed Successfully!").show();
                 cartList.clear();
                 tblCart.refresh();
