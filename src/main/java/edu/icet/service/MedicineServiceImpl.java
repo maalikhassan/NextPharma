@@ -28,9 +28,19 @@ public class MedicineServiceImpl implements CrudService<MedicineDto, String> {
         return repository.save(entity);
     }
 
-    // Leave these as stubs for now
-    @Override public boolean update(MedicineDto dto) throws SQLException { return false; }
-    @Override public boolean delete(String s) throws SQLException { return false; }
+    @Override
+    public boolean update(MedicineDto dto) throws SQLException {
+        MedicineEntity entity = new MedicineEntity(
+                dto.getMedicineCode(), dto.getName(), dto.getBrand(),
+                dto.getSupplierId(), dto.getExpiryDate(), dto.getQtyOnHand(), dto.getUnitPrice()
+        );
+        return repository.update(entity);
+    }
+
+    @Override
+    public boolean delete(String id) throws SQLException {
+        return repository.delete(id);
+    }
 
     @Override
     public MedicineDto search(String id) throws SQLException {

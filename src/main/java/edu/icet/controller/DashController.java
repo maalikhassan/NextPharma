@@ -11,31 +11,19 @@ public class DashController {
     @FXML
     private AnchorPane mainContent;
 
-    // Low Stock Table
-    @FXML
-    private TableView<?> tblLowStock;
-    @FXML
-    private TableColumn<?, ?> colLowStockCode;
-    @FXML
-    private TableColumn<?, ?> colLowStockName;
-    @FXML
-    private TableColumn<?, ?> colLowStockQty;
+    public void initialize() {
+        btnHomeOnAction(null); // Loads the home screen automatically on startup
+    }
 
-    // Expiring Table
-    @FXML
-    private TableView<?> tblExpiring;
-    @FXML
-    private TableColumn<?, ?> colExpCode;
-    @FXML
-    private TableColumn<?, ?> colExpName;
-    @FXML
-    private TableColumn<?, ?> colExpDate;
-
-    // Navigation Button Actions
     @FXML
     void btnHomeOnAction(ActionEvent event) {
-        System.out.println("Home Clicked");
-        // Logic to clear/reset the mainContent area
+        try {
+            AnchorPane homePane = javafx.fxml.FXMLLoader.load(getClass().getResource("/view/HomeForm.fxml"));
+            mainContent.getChildren().clear();
+            mainContent.getChildren().add(homePane);
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

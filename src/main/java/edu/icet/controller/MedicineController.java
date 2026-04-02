@@ -64,6 +64,22 @@ public class MedicineController implements Initializable {
 
         // 2. Load the data
         loadTableData();
+
+        tblMedicines.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // 1. Cast the generic newValue to our specific MedicineDto
+                MedicineDto selectedMedicine = (MedicineDto) newValue;
+
+                // 2. Use the strongly-typed selectedMedicine object
+                txtCode.setText(selectedMedicine.getMedicineCode());
+                txtName.setText(selectedMedicine.getName());
+                txtBrand.setText(selectedMedicine.getBrand());
+                txtSupplierId.setText(selectedMedicine.getSupplierId());
+                dateExpiry.setValue(selectedMedicine.getExpiryDate());
+                txtQty.setText(String.valueOf(selectedMedicine.getQtyOnHand()));
+                txtPrice.setText(String.valueOf(selectedMedicine.getUnitPrice()));
+            }
+        });
     }
 
     private void loadTableData() {
@@ -92,7 +108,15 @@ public class MedicineController implements Initializable {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
-        System.out.println("Delete Clicked");
+        try {
+            if (service.delete(txtCode.getText())) {
+                new Alert(Alert.AlertType.INFORMATION, "Deleted Successfully!").show();
+                loadTableData();
+                btnClearOnAction(null);
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Cannot delete! It might be tied to an order.").show();
+        }
     }
 
     @FXML
@@ -130,7 +154,20 @@ public class MedicineController implements Initializable {
 
     @FXML
     void btnUpdateOnAction(ActionEvent event) {
-        System.out.println("Update Clicked");
+        try {
+            MedicineDto dto = new MedicineDto(
+                    txtCode.getText(), txtName.getText(), txtBrand.getText(),
+                    txtSupplierId.getText(), dateExpiry.getValue(),
+                    Integer.parseInt(txtQty.getText()), Double.parseDouble(txtPrice.getText())
+            );
+            if (service.update(dto)) {
+                new Alert(Alert.AlertType.INFORMATION, "Updated Successfully!").show();
+                loadTableData();
+                btnClearOnAction(null);
+            }
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Database Error!").show();
+        }
     }
 
 }

@@ -25,10 +25,27 @@ public class MedicineRepositoryImpl implements CrudRepository<MedicineEntity, St
 
         return pstm.executeUpdate() > 0;
     }
+    @Override
+    public boolean update(MedicineEntity entity) throws SQLException {
+        String sql = "UPDATE Medicine SET name=?, brand=?, supplier_id=?, expiry_date=?, qty_on_hand=?, unit_price=? WHERE medicine_code=?";
+        java.sql.PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setString(1, entity.getName());
+        pstm.setString(2, entity.getBrand());
+        pstm.setString(3, entity.getSupplierId());
+        pstm.setObject(4, entity.getExpiryDate());
+        pstm.setInt(5, entity.getQtyOnHand());
+        pstm.setDouble(6, entity.getUnitPrice());
+        pstm.setString(7, entity.getMedicineCode());
+        return pstm.executeUpdate() > 0;
+    }
 
-    // You can leave these returning false/null for now to satisfy the interface
-    @Override public boolean update(MedicineEntity entity) throws SQLException { return false; }
-    @Override public boolean delete(String s) throws SQLException { return false; }
+    @Override
+    public boolean delete(String id) throws SQLException {
+        String sql = "DELETE FROM Medicine WHERE medicine_code=?";
+        java.sql.PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setString(1, id);
+        return pstm.executeUpdate() > 0;
+    }
 
     @Override
     public MedicineEntity search(String id) throws SQLException {
