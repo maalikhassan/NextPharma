@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="SalesReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1a2b3c4d-5e6f-7a8b-9c0d-1e2f3a4b5c6d">
+    <queryString>
+        <![CDATA[SELECT * FROM Orders]]>
+    </queryString>
+    <field name="order_id" class="java.lang.String"/>
+    <field name="order_date" class="java.sql.Date"/>
+    <field name="total_amount" class="java.lang.Double"/>
+    <title>
+        <band height="50">
+            <staticText>
+                <reportElement x="0" y="0" width="555" height="30" uuid="2b3c4d5e-6f7a-8b9c-0d1e-2f3a4b5c6d7e"/>
+                <textElement textAlignment="Center"><font size="20" isBold="true"/></textElement>
+                <text><![CDATA[NextPharma - All-Time Sales Report]]></text>
+            </staticText>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="30">
+            <staticText><reportElement x="50" y="0" width="150" height="20" uuid="3c4d5e6f-7a8b-9c0d-1e2f-3a4b5c6d7e8f"/><textElement><font isBold="true"/></textElement><text><![CDATA[Order ID]]></text></staticText>
+            <staticText><reportElement x="200" y="0" width="150" height="20" uuid="4d5e6f7a-8b9c-0d1e-2f3a-4b5c6d7e8f9a"/><textElement><font isBold="true"/></textElement><text><![CDATA[Order Date]]></text></staticText>
+            <staticText><reportElement x="350" y="0" width="150" height="20" uuid="5e6f7a8b-9c0d-1e2f-3a4b-5c6d7e8f9a0b"/><textElement><font isBold="true"/></textElement><text><![CDATA[Total Amount (Rs)]]></text></staticText>
+            <line><reportElement x="0" y="25" width="555" height="1" uuid="6f7a8b9c-0d1e-2f3a-4b5c-6d7e8f9a0b1c"/></line>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="25">
+            <textField><reportElement x="50" y="0" width="150" height="20" uuid="7a8b9c0d-1e2f-3a4b-5c6d-7e8f9a0b1c2d"/><textFieldExpression><![CDATA[$F{order_id}]]></textFieldExpression></textField>
+            <textField pattern="MMM d, yyyy"><reportElement x="200" y="0" width="150" height="20" uuid="8b9c0d1e-2f3a-4b5c-6d7e-8f9a0b1c2d3e"/><textFieldExpression><![CDATA[$F{order_date}]]></textFieldExpression></textField>
+            <textField><reportElement x="350" y="0" width="150" height="20" uuid="9c0d1e2f-3a4b-5c6d-7e8f-9a0b1c2d3e4f"/><textFieldExpression><![CDATA[$F{total_amount}]]></textFieldExpression></textField>
+        </band>
+    </detail>
+</jasperReport>

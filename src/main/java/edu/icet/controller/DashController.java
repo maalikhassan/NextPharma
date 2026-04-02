@@ -56,7 +56,13 @@ public class DashController {
 
     @FXML
     void btnReportsOnAction(ActionEvent event) {
-        System.out.println("Reports Clicked");
+        try {
+            AnchorPane reportsPane = javafx.fxml.FXMLLoader.load(getClass().getResource("/view/ReportsForm.fxml"));
+            mainContent.getChildren().clear();
+            mainContent.getChildren().add(reportsPane);
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
