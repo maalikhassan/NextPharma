@@ -96,12 +96,12 @@ public class MedicineController implements Initializable {
             List<MedicineDto> allMedicines = service.getAll();
             ObservableList<MedicineDto> observableList = FXCollections.observableArrayList(allMedicines);
 
-            // --- INSTANT SEARCH LOGIC START ---
-            // 1. Wrap the ObservableList in a FilteredList
+            // --- SEARCH LOGIC START ---
+            // Wrap the ObservableList in a FilteredList
             javafx.collections.transformation.FilteredList<MedicineDto> filteredData =
                     new javafx.collections.transformation.FilteredList<>(observableList, b -> true);
 
-            // 2. Set the filter Predicate whenever the filter changes
+            // Set the filter Predicate whenever the filter changes
             txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
                 filteredData.setPredicate(medicine -> {
                     // If filter text is empty, display all medicines
@@ -121,14 +121,14 @@ public class MedicineController implements Initializable {
                 });
             });
 
-            // 3. Wrap the FilteredList in a SortedList (to keep table sorting functional)
+            // Wrap the FilteredList in a SortedList (to keep table sorting functional)
             javafx.collections.transformation.SortedList<MedicineDto> sortedData =
                     new javafx.collections.transformation.SortedList<>(filteredData);
 
-            // 4. Bind the SortedList comparator to the TableView comparator
+            // Bind the SortedList comparator to the TableView comparator
             sortedData.comparatorProperty().bind(tblMedicines.comparatorProperty());
 
-            // 5. Add sorted (and filtered) data to the table
+            // Add sorted (and filtered) data to the table
             tblMedicines.setItems(sortedData);
             // --- INSTANT SEARCH LOGIC END ---
 

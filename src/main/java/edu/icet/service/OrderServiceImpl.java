@@ -9,6 +9,8 @@ import edu.icet.repository.MedicineRepositoryImpl;
 import edu.icet.repository.OrderRepositoryImpl;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderServiceImpl {
 
@@ -82,5 +84,26 @@ public class OrderServiceImpl {
             // 5. ALWAYS turn auto-commit back on before closing the transaction
             connection.setAutoCommit(true);
         }
+    }
+
+    public List<OrderDto> getAllOrders() throws SQLException {
+        List<OrderDto> list = new ArrayList<>();
+        for (OrderEntity entity : orderRepo.getAllOrders()) {
+            list.add(new OrderDto(entity.getOrderId(), entity.getOrderDate(), entity.getTotalAmount(), null));
+        }
+        return list;
+    }
+
+    public List<OrderDetailDto> getOrderDetails(String orderId) throws SQLException {
+        List<OrderDetailDto> list = new ArrayList<>();
+        for (OrderDetailEntity entity : orderRepo.getOrderDetails(orderId)) {
+            list.add(new OrderDetailDto(
+                    entity.getOrderId(),
+                    entity.getMedicineCode(),
+                    entity.getQty(),
+                    entity.getUnitPrice()
+            ));
+        }
+        return list;
     }
 }

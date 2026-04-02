@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="650.0" prefWidth="780.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.icet.controller.OrderHistoryController">
+    <children>
+        <Label layoutX="40.0" layoutY="30.0" text="Sales History" textFill="#2c3e50">
+            <font><Font name="System Bold" size="28.0" /></font>
+        </Label>
+
+        <TextField fx:id="txtSearch" layoutX="40.0" layoutY="80.0" prefHeight="35.0" prefWidth="350.0" promptText="🔍 Search by Order ID or Date..." style="-fx-border-color: #3498db; -fx-border-radius: 5;" />
+
+        <TableView fx:id="tblOrders" layoutX="40.0" layoutY="130.0" prefHeight="220.0" prefWidth="700.0">
+            <columns>
+                <TableColumn fx:id="colOrderId" prefWidth="200.0" text="Order ID" />
+                <TableColumn fx:id="colDate" prefWidth="250.0" text="Order Date" />
+                <TableColumn fx:id="colTotal" prefWidth="248.0" text="Total Amount (Rs)" />
+            </columns>
+        </TableView>
+
+        <Label layoutX="40.0" layoutY="370.0" text="Items in Selected Order" textFill="#2c3e50">
+            <font><Font name="System Bold" size="20.0" /></font>
+        </Label>
+
+        <TableView fx:id="tblOrderDetails" layoutX="40.0" layoutY="410.0" prefHeight="200.0" prefWidth="700.0">
+            <columns>
+                <TableColumn fx:id="colMedCode" prefWidth="200.0" text="Medicine Code" />
+                <TableColumn fx:id="colQty" prefWidth="250.0" text="Quantity Purchased" />
+                <TableColumn fx:id="colUnitPrice" prefWidth="248.0" text="Unit Price (Rs)" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

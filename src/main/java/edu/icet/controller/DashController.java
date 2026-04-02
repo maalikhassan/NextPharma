@@ -2,6 +2,7 @@ package edu.icet.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
@@ -18,7 +19,7 @@ public class DashController {
     @FXML
     void btnHomeOnAction(ActionEvent event) {
         try {
-            AnchorPane homePane = javafx.fxml.FXMLLoader.load(getClass().getResource("/view/HomeForm.fxml"));
+            AnchorPane homePane = FXMLLoader.load(getClass().getResource("/view/HomeForm.fxml"));
             mainContent.getChildren().clear();
             mainContent.getChildren().add(homePane);
         } catch (java.io.IOException e) {
@@ -30,7 +31,7 @@ public class DashController {
     void btnMedicinesOnAction(ActionEvent event) {
         try {
             // Load the MedicineForm FXML
-            AnchorPane medicinePane = javafx.fxml.FXMLLoader.load(getClass().getResource("/view/MedicineForm.fxml"));
+            AnchorPane medicinePane = FXMLLoader.load(getClass().getResource("/view/MedicineForm.fxml"));
 
             // Clear the current content in the main area
             mainContent.getChildren().clear();
@@ -46,7 +47,7 @@ public class DashController {
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
         try {
-            AnchorPane posPane = javafx.fxml.FXMLLoader.load(getClass().getResource("/view/BillingForm.fxml"));
+            AnchorPane posPane = FXMLLoader.load(getClass().getResource("/view/BillingForm.fxml"));
             mainContent.getChildren().clear();
             mainContent.getChildren().add(posPane);
         } catch (java.io.IOException e) {
@@ -57,7 +58,7 @@ public class DashController {
     @FXML
     void btnReportsOnAction(ActionEvent event) {
         try {
-            AnchorPane reportsPane = javafx.fxml.FXMLLoader.load(getClass().getResource("/view/ReportsForm.fxml"));
+            AnchorPane reportsPane = FXMLLoader.load(getClass().getResource("/view/ReportsForm.fxml"));
             mainContent.getChildren().clear();
             mainContent.getChildren().add(reportsPane);
         } catch (java.io.IOException e) {
@@ -68,9 +69,20 @@ public class DashController {
     @FXML
     void btnSuppliersOnAction(ActionEvent event) {
         try {
-            AnchorPane supplierPane = javafx.fxml.FXMLLoader.load(getClass().getResource("/view/SupplierForm.fxml"));
+            AnchorPane supplierPane = FXMLLoader.load(getClass().getResource("/view/SupplierForm.fxml"));
             mainContent.getChildren().clear();
             mainContent.getChildren().add(supplierPane);
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void btnSalesHistoryOnAction(ActionEvent event) {
+        try {
+            javafx.scene.layout.AnchorPane historyPane = FXMLLoader.load(getClass().getResource("/view/OrderHistoryForm.fxml"));
+            mainContent.getChildren().clear();
+            mainContent.getChildren().add(historyPane);
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }

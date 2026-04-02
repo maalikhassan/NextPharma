@@ -4,6 +4,8 @@ import edu.icet.dto.SupplierDto;
 import edu.icet.service.SupplierServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -60,8 +62,7 @@ public class SupplierController implements Initializable {
             List<SupplierDto> allSuppliers = service.getAll();
             ObservableList<SupplierDto> observableList = FXCollections.observableArrayList(allSuppliers);
 
-            javafx.collections.transformation.FilteredList<SupplierDto> filteredData =
-                    new javafx.collections.transformation.FilteredList<>(observableList, b -> true);
+            FilteredList<SupplierDto> filteredData = new FilteredList<>(observableList, b -> true);
 
             txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
                 filteredData.setPredicate(supplier -> {
@@ -78,8 +79,7 @@ public class SupplierController implements Initializable {
                 });
             });
 
-            javafx.collections.transformation.SortedList<SupplierDto> sortedData =
-                    new javafx.collections.transformation.SortedList<>(filteredData);
+            SortedList<SupplierDto> sortedData = new SortedList<>(filteredData);
             sortedData.comparatorProperty().bind(tblSuppliers.comparatorProperty());
             tblSuppliers.setItems(sortedData);
         } catch (SQLException e) {

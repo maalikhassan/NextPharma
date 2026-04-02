@@ -57,7 +57,7 @@ public class BillingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // 1. Setup Table Columns
+        // Table Columns
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colUnitPrice.setCellValueFactory(new PropertyValueFactory<>("unitPrice"));
@@ -65,10 +65,10 @@ public class BillingController implements Initializable {
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 
         generateOrderId();
-        // 2. Load Dropdown
+        // Dropdown
         loadMedicineCodes();
 
-        // 3. Add Listener to Dropdown to Auto-Fill details
+        //  Listener to Dropdown to Auto-Fill details
         cmbMedicineCode.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 fillMedicineDetails(newValue);

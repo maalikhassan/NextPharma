@@ -7,7 +7,10 @@ import edu.icet.entity.OrderDetailEntity;
 import edu.icet.entity.OrderEntity;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderRepositoryImpl {
 
@@ -38,5 +41,35 @@ public class OrderRepositoryImpl {
             return rst.getString("order_id");
         }
         return null;
+    }
+
+    public List<OrderEntity> getAllOrders() throws SQLException {
+        List<OrderEntity> list = new ArrayList<>();
+        ResultSet rst = DBConnection.getInstance().getConnection().createStatement().executeQuery("SELECT * FROM Orders");
+        while (rst.next()) {
+            list.add(new OrderEntity(
+                    rst.getString("order_id"),
+                    rst.getDate("order_date").toLocalDate(),
+                    rst.getDouble("total_amount")
+            ));
+        }
+        return list;
+    }
+
+    public List<OrderDetailEntity> getOrderDetails(String orderId) throws SQLException {
+        List<OrderDetailEntity> list = new ArrayList<>();
+        String sql = "SELECT * FROM Order_Detail WHERE order_id = ?";
+        PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setString(1, orderId);
+        ResultSet rst = pstm.executeQuery();
+        while (rst.next()) {
+            list.add(new edu.icet.entity.OrderDetailEntity(
+                    rst.getString("order_id"),
+                    rst.getString("medicine_code"),
+                    rst.getInt("qty"),
+                    rst.getDouble("unit_price")
+            ));
+        }
+        return list;
     }
 }
