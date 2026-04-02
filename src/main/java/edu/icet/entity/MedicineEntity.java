@@ -1,4 +1,4 @@
-package edu.icet.model.dto;
+package edu.icet.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MedicineDto {
+public class MedicineEntity {
     private String medicineCode;
     private String name;
     private String brand;
