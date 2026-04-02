@@ -57,8 +57,13 @@ public class DashController {
 
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
-        System.out.println("POS Clicked");
-        // Logic to load POSForm.fxml into mainContent
+        try {
+            AnchorPane posPane = javafx.fxml.FXMLLoader.load(getClass().getResource("/view/BillingForm.fxml"));
+            mainContent.getChildren().clear();
+            mainContent.getChildren().add(posPane);
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
