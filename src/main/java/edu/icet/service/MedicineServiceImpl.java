@@ -31,8 +31,23 @@ public class MedicineServiceImpl implements CrudService<MedicineDto, String> {
     // Leave these as stubs for now
     @Override public boolean update(MedicineDto dto) throws SQLException { return false; }
     @Override public boolean delete(String s) throws SQLException { return false; }
-    @Override public MedicineDto search(String s) throws SQLException { return null; }
 
+    @Override
+    public MedicineDto search(String id) throws SQLException {
+        MedicineEntity entity = repository.search(id);
+        if (entity != null) {
+            return new MedicineDto(
+                    entity.getMedicineCode(),
+                    entity.getName(),
+                    entity.getBrand(),
+                    entity.getSupplierId(),
+                    entity.getExpiryDate(),
+                    entity.getQtyOnHand(),
+                    entity.getUnitPrice()
+            );
+        }
+        return null;
+    }
     @Override
     public List<MedicineDto> getAll() throws SQLException {
         List<MedicineEntity> entityList = repository.getAll();

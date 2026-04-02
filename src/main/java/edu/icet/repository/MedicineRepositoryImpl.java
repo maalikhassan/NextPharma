@@ -29,8 +29,27 @@ public class MedicineRepositoryImpl implements CrudRepository<MedicineEntity, St
     // You can leave these returning false/null for now to satisfy the interface
     @Override public boolean update(MedicineEntity entity) throws SQLException { return false; }
     @Override public boolean delete(String s) throws SQLException { return false; }
-    @Override public MedicineEntity search(String s) throws SQLException { return null; }
 
+    @Override
+    public MedicineEntity search(String id) throws SQLException {
+        String sql = "SELECT * FROM Medicine WHERE medicine_code = ?";
+        PreparedStatement pstm = DBConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setString(1, id);
+        ResultSet rst = pstm.executeQuery();
+
+        if (rst.next()) {
+            return new MedicineEntity(
+                    rst.getString("medicine_code"),
+                    rst.getString("name"),
+                    rst.getString("brand"),
+                    rst.getString("supplier_id"),
+                    rst.getDate("expiry_date").toLocalDate(),
+                    rst.getInt("qty_on_hand"),
+                    rst.getDouble("unit_price")
+            );
+        }
+        return null;
+    }
     @Override
     public List<MedicineEntity> getAll() throws SQLException {
         List<MedicineEntity> medicineList = new ArrayList<>();
