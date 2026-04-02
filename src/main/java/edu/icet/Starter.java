@@ -22,8 +22,8 @@ public class Starter extends Application {
             throw new IllegalStateException("Cannot find Dash.fxml. Make sure it is inside src/main/resources/view/");
         }
 
-        primaryStage.setScene(new Scene(FXMLLoader.load(resource)));
-        primaryStage.setTitle("NextPharma POS - Dashboard");
+        primaryStage.setScene(new Scene(FXMLLoader.load(getClass().getResource("/view/LoginForm.fxml"))));
+        primaryStage.setTitle("NextPharma - Login");
         primaryStage.centerOnScreen();
         primaryStage.setResizable(false); // Prevents the layout from breaking if they try to resize the window
         primaryStage.show();
