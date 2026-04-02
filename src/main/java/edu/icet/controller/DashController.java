@@ -61,6 +61,12 @@ public class DashController {
 
     @FXML
     void btnSuppliersOnAction(ActionEvent event) {
-        System.out.println("Suppliers Clicked");
+        try {
+            AnchorPane supplierPane = javafx.fxml.FXMLLoader.load(getClass().getResource("/view/SupplierForm.fxml"));
+            mainContent.getChildren().clear();
+            mainContent.getChildren().add(supplierPane);
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
     }
 }
