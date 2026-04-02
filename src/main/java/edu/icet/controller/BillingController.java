@@ -3,6 +3,7 @@ package edu.icet.controller;
 import edu.icet.dto.CartTm;
 import edu.icet.dto.MedicineDto;
 import edu.icet.service.MedicineServiceImpl;
+import edu.icet.service.OrderServiceImpl;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -37,6 +38,16 @@ public class BillingController implements Initializable {
     private final MedicineServiceImpl medicineService = new MedicineServiceImpl();
     private ObservableList<CartTm> cartList = FXCollections.observableArrayList();
     private double netTotal = 0.0;
+    private final OrderServiceImpl orderService = new OrderServiceImpl();
+
+    private void generateOrderId() {
+        try {
+            String nextId = orderService.generateNextOrderId();
+            lblOrderId.setText(nextId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -47,6 +58,7 @@ public class BillingController implements Initializable {
         colQty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         colTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
 
+        generateOrderId();
         // 2. Load Dropdown
         loadMedicineCodes();
 
@@ -141,6 +153,43 @@ public class BillingController implements Initializable {
 
     @FXML
     void btnPlaceOrderOnAction(ActionEvent event) {
-        System.out.println("Order Placement Logic coming next!");
+        if (cartList.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Cart is empty!").show();
+            return;
+        }
+
+        try {
+            String orderId = lblOrderId.getText();
+            java.time.LocalDate orderDate = java.time.LocalDate.now();
+
+            // 1. Create a list of OrderDetailDto from our Cart table
+            java.util.List<edu.icet.dto.OrderDetailDto> orderDetails = new java.util.ArrayList<>();
+            for (CartTm tm : cartList) {
+                orderDetails.add(new edu.icet.dto.OrderDetailDto(
+                        orderId, tm.getCode(), tm.getQty(), tm.getUnitPrice()
+                ));
+            }
+
+            // 2. Package everything into a single OrderDto
+            edu.icet.dto.OrderDto orderDto = new edu.icet.dto.OrderDto(
+                    orderId, orderDate, netTotal, orderDetails
+            );
+
+            // 3. Pass to the Service layer to handle the transaction
+            boolean isPlaced = orderService.placeOrder(orderDto);
+
+            if (isPlaced) {
+                new Alert(Alert.AlertType.INFORMATION, "Order Placed Successfully!").show();
+                cartList.clear();
+                tblCart.refresh();
+                calculateNetTotal();
+                generateOrderId();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Order Placement Failed!").show();
+            }
+
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Database Error: " + e.getMessage()).show();
+        }
     }
 }

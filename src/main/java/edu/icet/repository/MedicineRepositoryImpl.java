@@ -69,4 +69,12 @@ public class MedicineRepositoryImpl implements CrudRepository<MedicineEntity, St
         }
         return medicineList;
     }
+
+    public boolean updateStock(String code, int qty) throws SQLException {
+        String sql = "UPDATE Medicine SET qty_on_hand = qty_on_hand - ? WHERE medicine_code = ?";
+        java.sql.PreparedStatement pstm = edu.icet.db.DBConnection.getInstance().getConnection().prepareStatement(sql);
+        pstm.setInt(1, qty);
+        pstm.setString(2, code);
+        return pstm.executeUpdate() > 0;
+    }
 }
