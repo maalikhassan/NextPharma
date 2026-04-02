@@ -20,6 +20,8 @@ public class MedicineController implements Initializable {
     private final MedicineServiceImpl service = new MedicineServiceImpl();
 
     @FXML
+    private TextField txtSearch;
+    @FXML
     private DatePicker dateExpiry;
     @FXML
     private TextField txtBrand;
@@ -35,21 +37,28 @@ public class MedicineController implements Initializable {
     private TextField txtSupplierId;
 
     @FXML
-    private TableView<?> tblMedicines;
+    private TableView<MedicineDto> tblMedicines;
+
     @FXML
-    private TableColumn<?, ?> colBrand;
+    private TableColumn<MedicineDto, String> colCode;
+
     @FXML
-    private TableColumn<?, ?> colCode;
+    private TableColumn<MedicineDto, String> colName;
+
     @FXML
-    private TableColumn<?, ?> colExpiry;
+    private TableColumn<MedicineDto, String> colBrand;
+
     @FXML
-    private TableColumn<?, ?> colName;
+    private TableColumn<MedicineDto, String> colSupplier;
+
     @FXML
-    private TableColumn<?, ?> colPrice;
+    private TableColumn<MedicineDto, java.time.LocalDate> colExpiry;
+
     @FXML
-    private TableColumn<?, ?> colQty;
+    private TableColumn<MedicineDto, Integer> colQty;
+
     @FXML
-    private TableColumn<?, ?> colSupplier;
+    private TableColumn<MedicineDto, Double> colPrice;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -87,8 +96,41 @@ public class MedicineController implements Initializable {
             List<MedicineDto> allMedicines = service.getAll();
             ObservableList<MedicineDto> observableList = FXCollections.observableArrayList(allMedicines);
 
-            // This cast is needed because we used wildcards <?, ?> in the FXML generation earlier
-            ((TableView<MedicineDto>) tblMedicines).setItems(observableList);
+            // --- INSTANT SEARCH LOGIC START ---
+            // 1. Wrap the ObservableList in a FilteredList
+            javafx.collections.transformation.FilteredList<MedicineDto> filteredData =
+                    new javafx.collections.transformation.FilteredList<>(observableList, b -> true);
+
+            // 2. Set the filter Predicate whenever the filter changes
+            txtSearch.textProperty().addListener((observable, oldValue, newValue) -> {
+                filteredData.setPredicate(medicine -> {
+                    // If filter text is empty, display all medicines
+                    if (newValue == null || newValue.isEmpty()) {
+                        return true;
+                    }
+
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    // Search by Code or Name!
+                    if (medicine.getMedicineCode().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches code
+                    } else if (medicine.getName().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches name
+                    }
+                    return false; // Does not match
+                });
+            });
+
+            // 3. Wrap the FilteredList in a SortedList (to keep table sorting functional)
+            javafx.collections.transformation.SortedList<MedicineDto> sortedData =
+                    new javafx.collections.transformation.SortedList<>(filteredData);
+
+            // 4. Bind the SortedList comparator to the TableView comparator
+            sortedData.comparatorProperty().bind(tblMedicines.comparatorProperty());
+
+            // 5. Add sorted (and filtered) data to the table
+            tblMedicines.setItems(sortedData);
+            // --- INSTANT SEARCH LOGIC END ---
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to load medicines: " + e.getMessage()).show();

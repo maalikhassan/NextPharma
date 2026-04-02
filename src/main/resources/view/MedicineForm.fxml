@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="780.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.icet.controller.MedicineController">
+<AnchorPane prefHeight="650.0" prefWidth="780.0" style="-fx-background-color: #ecf0f1;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.icet.controller.MedicineController">
     <children>
         <Label layoutX="40.0" layoutY="30.0" text="Manage Medicines" textFill="#2c3e50">
             <font>
@@ -25,6 +25,8 @@
         <DatePicker fx:id="dateExpiry" layoutX="210.0" layoutY="140.0" prefHeight="35.0" prefWidth="170.0" promptText="Expiry Date" />
         <TextField fx:id="txtQty" layoutX="400.0" layoutY="140.0" prefHeight="35.0" prefWidth="150.0" promptText="Qty on Hand" />
         <TextField fx:id="txtPrice" layoutX="570.0" layoutY="140.0" prefHeight="35.0" prefWidth="170.0" promptText="Unit Price (Rs)" />
+
+        <TextField fx:id="txtSearch" layoutX="40.0" layoutY="200.0" prefHeight="35.0" prefWidth="300.0" promptText="Search by Code or Name..." style="-fx-border-color: #3498db; -fx-border-radius: 5;" />
 
         <Button layoutX="400.0" layoutY="200.0" mnemonicParsing="false" onAction="#btnSaveOnAction" prefHeight="35.0" prefWidth="80.0" style="-fx-background-color: #2ecc71;" text="Save" textFill="WHITE">
             <font><Font name="System Bold" size="14.0" /></font>
